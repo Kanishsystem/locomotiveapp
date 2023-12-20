@@ -3,7 +3,9 @@ import { View, Text, Button,StyleSheet } from 'react-native';
 
 const DetailsScreen = ({ navigation }) => {
   return (
-   <View></View>
+   <View>
+    <Text>jo</Text>
+   </View>
   );
 };
 
