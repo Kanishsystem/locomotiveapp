@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Button,StyleSheet,Image, } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const HomeScreen = ({ navigation }) => {
+const Cat2 = ({ navigation }) => {
   return (
 
     <>
@@ -38,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
         style={styles.image}
       />
       </View>  */}
-        <Text>test</Text>
+        <Text>test11</Text>
 
       </View>
         {/* <View key="sub-cont-1">
@@ -49,8 +49,8 @@ const HomeScreen = ({ navigation }) => {
 
       </View>  */}
       <View  style={styles.container_2}>
-        <Text style={styles.text}>Lotomatic 4D</Text>
-        <Text style={styles.subText}>20-12-2023 (sun)</Text>
+        <Text style={styles.text}>Lotomatic 3D</Text>
+        <Text style={styles.subText}>2-12-2023 (sun)</Text>
       </View>
 
       <View  style={styles.container_3}>
@@ -173,13 +173,6 @@ const HomeScreen = ({ navigation }) => {
       </View>
 
       </View>
-       <View key="sub-cont-1">
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Details"
-          onPress={() => navigation.navigate('Cat_2')} />
-
-      </View> 
       
       </>
 
@@ -195,7 +188,7 @@ const styles = StyleSheet.create({
     height:45,
     display:"flex",
     flexDirection:"row",
-    justifyContent:"space-between"
+    justifyContent:"space-evenly"
     
   },
   ImageBox:{
@@ -208,7 +201,8 @@ const styles = StyleSheet.create({
   iconBox:{
     display:"flex",
     flexDirection:"row",
-    justifyContent:"space-between"
+    justifyContent:"space-between",
+
 
   },
   image:{
@@ -323,5 +317,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default HomeScreen;
-
+export default Cat2;

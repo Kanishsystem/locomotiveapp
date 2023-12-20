@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './homeScreen.jsx';
 import DetailsScreen from './DetailsScreen.jsx';
+import Cat2 from './cat2.jsx';
 
 
 
@@ -15,6 +16,7 @@ const Navigation = () => {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="Cat_2" component={Cat2} />
      
       </Stack.Navigator>
     </NavigationContainer>
