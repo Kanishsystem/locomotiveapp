@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './homeScreen.jsx';
 import DetailsScreen from './DetailsScreen.jsx';
 import Cat2 from './cat2.jsx';
+import Loto6D from './Loto6D.jsx';
 
 
 
@@ -16,8 +17,9 @@ const Navigation = () => {
       <Stack.Navigator    screenOptions={{
           headerShown: false,}} initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} /> 
         <Stack.Screen name="Cat_2" component={Cat2} />     
+        <Stack.Screen name="Loto6D" component={Loto6D} />  
       </Stack.Navigator>
     </NavigationContainer>
   );

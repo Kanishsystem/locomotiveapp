@@ -8,6 +8,8 @@ import {
   DefaultTheme,
   BottomNavigation,
 } from "react-native-paper";
+import Cat2 from "./src/cat2";
+import Loto6D from "./src/Loto6D";
 
 const myCustomTheme = {
   ...DefaultTheme,
@@ -22,10 +24,12 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <>
-     <PaperProvider theme={myCustomTheme}>
+
+ <Loto6D></Loto6D>
+     {/* <PaperProvider theme={myCustomTheme}>
       <StatusBar style="auto" />
       <Navigation />
-      </PaperProvider>
+      </PaperProvider> */}
     </>
   );
 }
