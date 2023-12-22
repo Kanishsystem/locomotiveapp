@@ -13,7 +13,7 @@ const LocoMotive3d = ({ navigation }) => {
 
   const getData = async () => {    
     startLoading();
-    let url = SCREEN_ONE_URL + cdate;
+    let url = SCREEN_TWO_URL + cdate;
     let _data = await apiGetDataAwait(url);
     // console.log("profile ", data_user);
     if (_data) {     
@@ -23,9 +23,12 @@ const LocoMotive3d = ({ navigation }) => {
   };
 
   const getValue=(index)=>{
-    return data[index]!==undefined ? data[index] : "";
+    return data[index]!==undefined ? data[index] : "***";
   }
 
+  const getSecValue=(index)=>{
+    return secData[index]!==undefined ? secData[index] : "***";
+  }
   useEffect(() => {
     getData()
   }, [cdate]);
@@ -39,24 +42,43 @@ const LocoMotive3d = ({ navigation }) => {
           <Text style={styles.subText}>2-12-2023 (sun)</Text>
         </View>
         <View style={styles.container_3}>
+        <View style={styles.subContainer}>
+            <View>
+             
+              <Text style={styles.cat_text}>3D 1st</Text>
+            </View>
+            <View>
+            
+              <Text style={styles.cat_text}>3D 2nd</Text>
+            </View>
+            <View>
+             
+              <Text style={styles.cat_text}>3D 3rd</Text>
+            </View>
+          </View>
+          <View style={styles.subContainer}>
+            <Text style={styles.cat_text_1}>{getValue("prize_1")}</Text>
+            <Text style={styles.cat_text_1}>{getValue("prize_2")}</Text>
+            <Text style={styles.cat_text_1}>{getValue("prize_3")}</Text>
+          </View>
           <View style={styles.subContainer}>
             <View>
-              <Text>3D</Text>
+            
               <Text style={styles.cat_text}>1st</Text>
             </View>
             <View>
-              <Text>3D</Text>
+             
               <Text style={styles.cat_text}>2nd</Text>
             </View>
             <View>
-              <Text>3D</Text>
+             
               <Text style={styles.cat_text}>3rd</Text>
             </View>
           </View>
           <View style={styles.subContainer}>
-            <Text style={styles.cat_text_1}>9774</Text>
-            <Text style={styles.cat_text_1}>5691</Text>
-            <Text style={styles.cat_text_1}>7746</Text>
+            <Text style={styles.cat_text_1}>{getValue("prize_1")}</Text>
+            <Text style={styles.cat_text_1}>{getValue("prize_2")}</Text>
+            <Text style={styles.cat_text_1}>{getValue("prize_3")}</Text>
           </View>
         </View>
 
@@ -114,11 +136,11 @@ const LocoMotive3d = ({ navigation }) => {
           </View>
         </View>
 
-        <View style={styles.container_2}>
+        {/* <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic Gold</Text>
           <Text style={styles.subText}>20-12-2023 (sun)</Text>
-        </View>
-        <View style={styles.container_6}>
+        </View> */}
+        {/* <View style={styles.container_6}>
           <View style={styles.subContainer}>
             <Text style={styles.cat_text}>1st</Text>
             <Text style={styles.cat_text}>2nd</Text>
@@ -156,7 +178,7 @@ const LocoMotive3d = ({ navigation }) => {
             <Text style={styles.cat_text}>Bonus</Text>
             <Text style={styles.cat_text}>Bonus</Text>
           </View>
-        </View>
+        </View> */}
       </View>
     </>
   );
@@ -226,7 +248,7 @@ const styles = StyleSheet.create({
   container_3: {
     display: "flex",
     justifyContent: "space-around",
-    height: 80,
+    height: 160,
   },
   container_6: {
     display: "flex",

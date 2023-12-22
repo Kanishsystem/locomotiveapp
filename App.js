@@ -11,6 +11,7 @@ import Cat2 from "./src/LocoMotive3d";
 import Loto6D from "./src/Loto6D";
 
 import { LoadingProvider } from "./src/Helpers/LoadingContext";
+import { SafeAreaView } from "react-native-web";
 
 const myCustomTheme = {
   ...DefaultTheme,
@@ -25,12 +26,14 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <>
+    
       <PaperProvider theme={myCustomTheme}>
         <LoadingProvider>
           <StatusBar style="auto" />
           <Navigation />
         </LoadingProvider>
       </PaperProvider>
+      
     </>
   );
 }
