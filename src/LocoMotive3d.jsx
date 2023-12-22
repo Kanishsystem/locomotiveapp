@@ -6,9 +6,7 @@ import { SCREEN_ONE_URL } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
 import { useLoading } from "./Helpers/LoadingContext"
 
-
-const HomeScreen = ({ navigation }) => {
-
+const LocoMotive3d = ({ navigation }) => {
   const [data, setData] = useState({});
   const [cdate, setDate] = useState("");
   const { startLoading, stopLoading, setToast } = useLoading();
@@ -31,23 +29,29 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     getData()
   }, [cdate]);
-
-
   return (
     <>
-      <HeaderScreen setDate={setDate} />
-      <TopIconBar navigation={navigation} setDate={setDate}/> 
-      <View style={styles.mainContainer}>      
+    <HeaderScreen setDate={setDate} />
+      <TopIconBar navigation={navigation}  />
+      <View style={styles.mainContainer}>       
         <View style={styles.container_2}>
-          <Text style={styles.text}>Lotomatic 4D</Text>
-          <Text style={styles.subText}>20-12-2023 (sun)</Text>
+          <Text style={styles.text}>Lotomatic 3D</Text>
+          <Text style={styles.subText}>2-12-2023 (sun)</Text>
         </View>
-
         <View style={styles.container_3}>
           <View style={styles.subContainer}>
-            <Text style={styles.cat_text}>1st</Text>
-            <Text style={styles.cat_text}>2nd</Text>
-            <Text style={styles.cat_text}>3rd</Text>
+            <View>
+              <Text>3D</Text>
+              <Text style={styles.cat_text}>1st</Text>
+            </View>
+            <View>
+              <Text>3D</Text>
+              <Text style={styles.cat_text}>2nd</Text>
+            </View>
+            <View>
+              <Text>3D</Text>
+              <Text style={styles.cat_text}>3rd</Text>
+            </View>
           </View>
           <View style={styles.subContainer}>
             <Text style={styles.cat_text_1}>9774</Text>
@@ -154,13 +158,6 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <View key="sub-cont-1">
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Details"
-          onPress={() => navigation.navigate("Cat_2")}
-        />
-      </View>
     </>
   );
 };
@@ -174,7 +171,7 @@ const styles = StyleSheet.create({
     height: 45,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
   },
   ImageBox: {
     borderRadius: "50%",
@@ -290,4 +287,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default LocoMotive3d;

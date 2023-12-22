@@ -7,7 +7,7 @@ import {
   PaperProvider,
   DefaultTheme
 } from "react-native-paper";
-import Cat2 from "./src/cat2";
+import Cat2 from "./src/LocoMotive3d";
 import Loto6D from "./src/Loto6D";
 
 import { LoadingProvider } from "./src/Helpers/LoadingContext";

@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Modal, Portal } from "react-native-paper";
 
-const HeaderScreen = ({ navigation }) => {
+const HeaderScreen = ({ navigation,setDate }) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const topMenu = () => {
     return (
@@ -29,14 +29,13 @@ const HeaderScreen = ({ navigation }) => {
   };
 
   const setCalenderDate=(dateSelection)=>{
-
+    console.log("date selected " , dateSelection);
+    setDate(dateSelection);
   }
   const calenderModal = () => {
-    return calenderDays().map((item) => {
+    return calenderDays().map((item,key) => {
       return (
-        <View>
-           <TouchableOpacity onPress={() => setCalenderDate(item)}> <Text>{item}</Text> </TouchableOpacity>
-        </View>
+           <TouchableOpacity key={key} onPress={() => setCalenderDate(item)}> <Text>{item}</Text> </TouchableOpacity>        
       );
     });
   };
