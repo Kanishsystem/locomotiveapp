@@ -10,22 +10,37 @@ import { useLoading } from "./Helpers/LoadingContext"
 const HomeScreen = ({ navigation }) => {
 
   const [data, setData] = useState({});
+  const [secData, setSecData] = useState({});
   const [cdate, setDate] = useState("");
   const { startLoading, stopLoading, setToast } = useLoading();
 
   const getData = async () => {    
     startLoading();
     let url = SCREEN_ONE_URL + cdate;
-    let _data = await apiGetDataAwait(url);
-    // console.log("profile ", data_user);
+    let _data = await apiGetDataAwait(url); 
     if (_data) {     
       setData(_data)
     }
+    await getSecData();
     stopLoading();
   };
 
+  const getSecData = async () => {    
+   // startLoading();
+    let url = SCREEN_ONE_URL + cdate;
+    let _data = await apiGetDataAwait(url); 
+    if (_data) {     
+      setSecData(_data)
+    }
+    //stopLoading();
+  };
+
   const getValue=(index)=>{
-    return data[index]!==undefined ? data[index] : "";
+    return data[index]!==undefined ? data[index] : "***";
+  }
+
+  const getSecValue=(index)=>{
+    return secData[index]!==undefined ? secData[index] : "***";
   }
 
   useEffect(() => {
@@ -50,9 +65,9 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.cat_text}>3rd</Text>
           </View>
           <View style={styles.subContainer}>
-            <Text style={styles.cat_text_1}>9774</Text>
-            <Text style={styles.cat_text_1}>5691</Text>
-            <Text style={styles.cat_text_1}>7746</Text>
+            <Text style={styles.cat_text_1}>{getValue("prize_1")}</Text>
+            <Text style={styles.cat_text_1}>{getValue("prize_2")}</Text>
+            <Text style={styles.cat_text_1}>{getValue("prize_3")}</Text>
           </View>
         </View>
 
@@ -62,8 +77,8 @@ const HomeScreen = ({ navigation }) => {
               <Text style={styles.subHeading}>Special</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("special_1")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_2")}</Text>
             </View>
 
             <View style={styles.subViewBox}>
@@ -153,14 +168,7 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.cat_text}>Bonus</Text>
           </View>
         </View>
-      </View>
-      <View key="sub-cont-1">
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Details"
-          onPress={() => navigation.navigate("Cat_2")}
-        />
-      </View>
+      </View>     
     </>
   );
 };
