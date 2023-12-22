@@ -1,38 +1,43 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { View, Text, Button, StyleSheet, Image } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import HeaderScreen from "./HeaderScreen";
+import TopIconBar from "./TopIconBar";
+import { SCREEN_ONE_URL } from "./api/ApiUrls";
+import { apiGetDataAwait } from "./api/ApiManager";
+import { useLoading } from "./Helpers/LoadingContext"
+
 
 const HomeScreen = ({ navigation }) => {
+
+  const [data, setData] = useState({});
+  const [cdate, setDate] = useState("");
+  const { startLoading, stopLoading, setToast } = useLoading();
+
+  const getData = async () => {    
+    startLoading();
+    let url = SCREEN_ONE_URL + cdate;
+    let _data = await apiGetDataAwait(url);
+    // console.log("profile ", data_user);
+    if (_data) {     
+      setData(_data)
+    }
+    stopLoading();
+  };
+
+  const getValue=(index)=>{
+    return data[index]!==undefined ? data[index] : "";
+  }
+
+  useEffect(() => {
+    getData()
+  }, []);
+
+
   return (
     <>
       <HeaderScreen />
-      <View style={styles.mainContainer}>
-      
-        {/* <View key="sub-cont-1">
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Details"
-          onPress={() => navigation.navigate('Details')} />
-
-      </View> */}
-
-        <View style={styles.container_1}>
-          {/* <View  style={styles.ImageBox}>
-      <Image
-        source={require('../assets/logo.png')} // Replace with the actual path to your image
-        style={styles.image}
-      />
-      </View>  */}
-          <Text>test</Text>
-        </View>
-        {/* <View key="sub-cont-1">
-        <Text>Home Screen</Text>
-       <Button
-          title="Go to Details"
-          onPress={() => navigation.navigate('Details')} /> 
-
-      </View>  */}
+      <TopIconBar navigation={navigation} />
+      <View style={styles.mainContainer}>      
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 4D</Text>
           <Text style={styles.subText}>20-12-2023 (sun)</Text>

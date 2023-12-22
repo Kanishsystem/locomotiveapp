@@ -5,9 +5,10 @@ import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   PaperProvider,
-  DefaultTheme,
-  BottomNavigation,
+  DefaultTheme
 } from "react-native-paper";
+
+import { LoadingProvider } from "./src/Helpers/LoadingContext";
 
 const myCustomTheme = {
   ...DefaultTheme,
@@ -22,9 +23,11 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <>
-     <PaperProvider theme={myCustomTheme}>
-      <StatusBar style="auto" />
-      <Navigation />
+      <PaperProvider theme={myCustomTheme}>
+        <LoadingProvider>
+          <StatusBar style="auto" />
+          <Navigation />
+        </LoadingProvider>
       </PaperProvider>
     </>
   );

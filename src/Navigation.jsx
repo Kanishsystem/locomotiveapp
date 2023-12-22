@@ -14,10 +14,10 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator    screenOptions={{
-          headerShown: false,}} initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="Cat_2" component={Cat2} />     
+          headerShown: false,}} >
+        <Stack.Screen name="screen1" component={HomeScreen} />
+        <Stack.Screen name="screen2" component={DetailsScreen} />
+        <Stack.Screen name="screen3" component={Cat2} />     
       </Stack.Navigator>
     </NavigationContainer>
   );
