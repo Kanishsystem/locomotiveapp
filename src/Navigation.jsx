@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './homeScreen.jsx';
 import DetailsScreen from './DetailsScreen.jsx';
 import Cat2 from './cat2.jsx';
+import Loto6D from './Loto6D.jsx';
 
 
 

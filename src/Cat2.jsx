@@ -6,6 +6,7 @@ const Cat2 = ({ navigation }) => {
   return (
 
     <>
+    
     <View  style={styles.mainContainer}>
     <View style={styles.TopView}>
       {/* <View  style={styles.ImageBox}>
@@ -55,9 +56,22 @@ const Cat2 = ({ navigation }) => {
 
       <View  style={styles.container_3}>
         <View style={styles.subContainer} >
-        <Text style={styles.cat_text}>1st</Text>
-        <Text style={styles.cat_text}>2nd</Text>
-        <Text style={styles.cat_text}>3rd</Text>
+          <View>
+            <Text>3D</Text>
+            <Text style={styles.cat_text}>1st</Text>
+          </View>
+          <View>
+            <Text>3D</Text>
+            <Text style={styles.cat_text}>2nd</Text>
+            </View>
+          <View>
+            <Text>3D</Text>
+            <Text style={styles.cat_text}>3rd</Text>
+            </View>
+        
+       
+       
+       
         </View>
         <View style={styles.subContainer}>
         <Text style={styles.cat_text_1}>9774</Text>
