@@ -57,25 +57,7 @@ const LocoMotive3d = ({ navigation,route }) => {
           <Text style={styles.subText}>2-12-2023 (sun)</Text>
         </View>
         <View style={styles.container_3}>
-        <View style={styles.subContainer}>
-            <View>
-             
-              <Text style={styles.cat_text}>3D 1st</Text>
-            </View>
-            <View>
-            
-              <Text style={styles.cat_text}>3D 2nd</Text>
-            </View>
-            <View>
-             
-              <Text style={styles.cat_text}>3D 3rd</Text>
-            </View>
-          </View>
-          <View style={styles.subContainer}>
-            <Text style={styles.cat_text_1}>{getValue("prize_1")}</Text>
-            <Text style={styles.cat_text_1}>{getValue("prize_2")}</Text>
-            <Text style={styles.cat_text_1}>{getValue("prize_3")}</Text>
-          </View>
+        
           <View style={styles.subContainer}>
             <View>
             
@@ -103,25 +85,37 @@ const LocoMotive3d = ({ navigation,route }) => {
               <Text style={styles.subHeading}>Special</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
             </View>
 
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
+            </View>
+            <View style={styles.subViewBox}>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
+            </View>
+            <View style={styles.subViewBox}>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
+            </View>
+            <View style={styles.subViewBox_1}>
+              <Text style={styles.subViewData}>565</Text>
+              
             </View>
           </View>
           <View style={styles.subView}>
@@ -129,24 +123,36 @@ const LocoMotive3d = ({ navigation,route }) => {
               <Text style={styles.subHeading}>Consolation</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
+            </View>
+            <View style={styles.subViewBox}>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
+            </View>
+            <View style={styles.subViewBox}>
+              <Text style={styles.subViewData}>565</Text>
+              <Text style={styles.subViewData}>461</Text>
+            </View>
+            <View style={styles.subViewBox_1}>
+              <Text style={styles.subViewData}>565</Text>
+              
             </View>
           </View>
         </View>
@@ -263,7 +269,7 @@ const styles = StyleSheet.create({
   container_3: {
     display: "flex",
     justifyContent: "space-around",
-    height: 160,
+    height: 110,
   },
   container_6: {
     display: "flex",
@@ -309,7 +315,7 @@ const styles = StyleSheet.create({
   container_4: {
     display: "flex",
     flexDirection: "row",
-    height: 170,
+    
   },
   subHeading: {
     fontWeight: "bold",
@@ -318,6 +324,12 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  subViewBox_1: {
+    display: "flex",
+    flexDirection: "row",
+    marginLeft:20
+   
   },
   subViewData: {
     fontSize: 20,

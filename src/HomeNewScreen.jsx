@@ -6,9 +6,10 @@ import {  SCREEN_ONE_1_URL, SCREEN_ONE_2_URL } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
 import { useLoading } from "./Helpers/LoadingContext";
 import { formatDateDb,getDayNameFromString,getCurrentDate, decrypt_data } from "./api/CommonFunctions";
+import { SafeAreaView } from "react-native-web";
 
 
-const HomeScreen = ({ navigation,route }) => {
+const HomeNewScreen = ({ navigation,route }) => {
 
   const [data, setData] = useState({});
   const [secData, setSecData] = useState({});
@@ -56,6 +57,7 @@ const HomeScreen = ({ navigation,route }) => {
 
   return (
     <>
+    
       <HeaderScreen setDate={setDate} />
       <TopIconBar navigation={navigation} setDate={setDate} route={route}/> 
       <View style={styles.mainContainer}>      
@@ -138,15 +140,15 @@ const HomeScreen = ({ navigation,route }) => {
         <View style={styles.container_6}>
           <View style={styles.subContainer}>
             <Text style={styles.cat_text}>1st</Text>
-            <Text style={styles.cat_text}>2nd</Text>
-            <Text style={styles.cat_text}>3rd</Text>
+            {/* <Text style={styles.cat_text}>2nd</Text>
+            <Text style={styles.cat_text}>3rd</Text> */}
           </View>
           <View style={styles.subContainer_1}>
             <View>
               <Text style={styles.cat_text_2}>977222</Text>
-              <Text style={styles.cat_text_2}>977</Text>
+              {/* <Text style={styles.cat_text_2}>977</Text> */}
             </View>
-            <View>
+            {/* <View>
               <Text style={styles.cat_text_2}>977222</Text>
               <Text style={styles.cat_text_2}>977</Text>
             </View>
@@ -166,15 +168,16 @@ const HomeScreen = ({ navigation,route }) => {
             <View>
               <Text style={styles.cat_text_2}>977</Text>
               <Text style={styles.cat_text_2}>977</Text>
-            </View>
+            </View> */}
           </View>
-          <View style={styles.subContainer}>
+          {/* <View style={styles.subContainer}>
             <Text style={styles.cat_text}>Bonus</Text>
             <Text style={styles.cat_text}>Bonus</Text>
             <Text style={styles.cat_text}>Bonus</Text>
-          </View>
+          </View> */}
         </View>
-      </View>     
+      </View>  
+       
     </>
   );
 };
@@ -304,4 +307,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default HomeNewScreen;
