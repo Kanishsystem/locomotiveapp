@@ -2,24 +2,25 @@ import React,{useState,useEffect} from "react";
 import { View, Text, Button, StyleSheet, Image } from "react-native";
 import HeaderScreen from "./HeaderScreen";
 import TopIconBar from "./TopIconBar";
-import { SCREEN_ONE_URL } from "./api/ApiUrls";
+import {  SCREEN_ONE_1_URL, SCREEN_ONE_2_URL } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
-import { useLoading } from "./Helpers/LoadingContext"
+import { useLoading } from "./Helpers/LoadingContext";
+import { formatDate,getDayName,getDayNameFromString,getCurrentDate, decrypt_data } from "./api/CommonFunctions";
 
 
 const HomeScreen = ({ navigation }) => {
 
   const [data, setData] = useState({});
   const [secData, setSecData] = useState({});
-  const [cdate, setDate] = useState("");
+  const [cdate, setDate] = useState(getCurrentDate());
   const { startLoading, stopLoading, setToast } = useLoading();
 
   const getData = async () => {    
     startLoading();
-    let url = SCREEN_ONE_URL + cdate;
+    let url = SCREEN_ONE_1_URL + cdate;
     let _data = await apiGetDataAwait(url); 
     if (_data) {     
-      setData(_data)
+      setData(decrypt_data(_data))
     }
     await getSecData();
     stopLoading();
@@ -27,10 +28,10 @@ const HomeScreen = ({ navigation }) => {
 
   const getSecData = async () => {    
    // startLoading();
-    let url = SCREEN_ONE_URL + cdate;
+    let url = SCREEN_ONE_2_URL + cdate;
     let _data = await apiGetDataAwait(url); 
     if (_data) {     
-      setSecData(_data)
+      setSecData(decrypt_data(_data))
     }
     //stopLoading();
   };
@@ -45,6 +46,10 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     getData()
+    //
+   // console.log(" date = ", cdate);
+    //let dayname = getDayNameFromString(getCurrentDate());
+   // console.log("dayaname " , dayname);
   }, [cdate]);
 
 
@@ -55,7 +60,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.mainContainer}>      
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 4D</Text>
-          <Text style={styles.subText}>20-12-2023 (sun)</Text>
+          <Text style={styles.subText}>{cdate} ({getDayNameFromString(cdate)})</Text>
         </View>
 
         <View style={styles.container_3}>
@@ -127,7 +132,7 @@ const HomeScreen = ({ navigation }) => {
 
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic Gold</Text>
-          <Text style={styles.subText}>20-12-2023 (sun)</Text>
+          <Text style={styles.subText}>{cdate} ({getDayNameFromString(cdate)})</Text>
         </View>
         <View style={styles.container_6}>
           <View style={styles.subContainer}>

@@ -2,18 +2,19 @@ import React,{useState,useEffect} from "react";
 import { View, Text, Button, StyleSheet, Image } from "react-native";
 import HeaderScreen from "./HeaderScreen";
 import TopIconBar from "./TopIconBar";
-import { SCREEN_ONE_URL } from "./api/ApiUrls";
+import { SCREEN_TWO_1_URL,SCREEN_ONE_2_URL  } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
 import { useLoading } from "./Helpers/LoadingContext"
 
 const LocoMotive3d = ({ navigation }) => {
   const [data, setData] = useState({});
+  const [secData, setSecData] = useState({});
   const [cdate, setDate] = useState("");
   const { startLoading, stopLoading, setToast } = useLoading();
 
   const getData = async () => {    
     startLoading();
-    let url = SCREEN_TWO_URL + cdate;
+    let url = SCREEN_TWO_1_URL + cdate;
     let _data = await apiGetDataAwait(url);
     // console.log("profile ", data_user);
     if (_data) {     
@@ -22,6 +23,17 @@ const LocoMotive3d = ({ navigation }) => {
     stopLoading();
   };
 
+  const getSecData = async () => {    
+    // startLoading();
+     let url = SCREEN_ONE_2_URL + cdate;
+     let _data = await apiGetDataAwait(url); 
+     if (_data) {     
+       setSecData(decrypt_data(_data))
+     }
+     //stopLoading();
+   };
+
+   
   const getValue=(index)=>{
     return data[index]!==undefined ? data[index] : "***";
   }
@@ -30,7 +42,8 @@ const LocoMotive3d = ({ navigation }) => {
     return secData[index]!==undefined ? secData[index] : "***";
   }
   useEffect(() => {
-    getData()
+    getData();
+    getSecData();
   }, [cdate]);
   return (
     <>
