@@ -7,10 +7,10 @@ import { apiGetDataAwait } from "./api/ApiManager";
 import { useLoading } from "./Helpers/LoadingContext"
 import { formatDateDb,getCurrentDate} from "./api/CommonFunctions";
 
-const Loto6D = ({ navigation,route }) => {
+const LotoMotive6d = ({ navigation,route }) => {
   const [data, setData] = useState({});
-  const [cdate, setDate] = useState(getCurrentDate());
-  const { startLoading, stopLoading, setToast } = useLoading();
+  //const [cdate, setDate] = useState(getCurrentDate());
+  const { startLoading, stopLoading, setToast,cdate,setDate } = useLoading();
 
   const getData = async () => {    
     startLoading();
@@ -28,11 +28,11 @@ const Loto6D = ({ navigation,route }) => {
   }
 
   useEffect(() => {
-    getData()
+  //  getData()
   }, [cdate]);
   return (
     <>
-    <HeaderScreen setDate={setDate} />
+  
       <TopIconBar navigation={navigation}  route={route}/>
       <View style={styles.MainContainer}>
         <View style={styles.container_2}>
@@ -88,7 +88,7 @@ const Loto6D = ({ navigation,route }) => {
 
               <View style={styles.subValue}>
                 <Text style={styles.cat_text_1}>
-                  .<div className=""></div>
+                  h
                 </Text>
                 <Text style={styles.cat_text_1}>.</Text>
                 <Text style={styles.cat_text_1}>3</Text>
@@ -105,6 +105,7 @@ const Loto6D = ({ navigation,route }) => {
             </View>
           </View>
         </View>
+        
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 6D</Text>
           <Text style={styles.subText}>20-12-2023 (sun)</Text>
@@ -294,4 +295,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Loto6D;
+export default LotoMotive6d;

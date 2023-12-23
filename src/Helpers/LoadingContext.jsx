@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useState,useEffect } from 'react';
 import { ActivityIndicator, Dialog, Portal, Button, Modal} from 'react-native-paper';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import { getCurrentDate } from '../api/CommonFunctions';
+
 const LoadingContext = createContext();
 
 const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);  
   const [toast, setToastMessage] = useState(""); 
+  const [cdate, setDate] = useState(getCurrentDate()); 
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
   
@@ -65,7 +68,7 @@ const LoadingProvider = ({ children }) => {
   }
 
   return (
-    <LoadingContext.Provider value={{ loading, startLoading, stopLoading, setToast }}>
+    <LoadingContext.Provider value={{ loading, startLoading, stopLoading, setToast,cdate,setDate }}>
       {children}
       {loading && (
         <View style={{

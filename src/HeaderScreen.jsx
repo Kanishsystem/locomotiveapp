@@ -3,14 +3,17 @@ import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Modal, Portal } from "react-native-paper";
 
-const HeaderScreen = ({ navigation,setDate }) => {
+const HeaderScreen = ({ navigation, setDate }) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const topMenu = () => {
     return (
       <View style={styles.TopView}>
         <Text style={styles.TopHeading}>Lotomatic</Text>
         <View style={styles.iconBox}>
-          <TouchableOpacity onPress={() => setMenuVisible(true)} style={{marginRight:10}}>
+          <TouchableOpacity
+            onPress={() => setMenuVisible(true)}
+            style={{ marginRight: 10 }}
+          >
             <Icon name="calendar" size={30} color="white" />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => shareScreen()}>
@@ -21,57 +24,56 @@ const HeaderScreen = ({ navigation,setDate }) => {
     );
   };
 
-  const getLast7Days=()=> {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const getLast7Days = () => {
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const today = new Date();
     const last7Days = [];
-  
+
     for (let i = 6; i >= 0; i--) {
       const currentDate = new Date(today);
       currentDate.setDate(today.getDate() - i);
-  
-      const day = currentDate.getDate().toString().padStart(2, '0');
-      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+
+      const day = currentDate.getDate().toString().padStart(2, "0");
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
       const year = currentDate.getFullYear();
-  
+
       const formattedDate = `${day}-${month}-${year}`;
       const dayName = days[currentDate.getDay()];
-  
+
       last7Days.push({ date: formattedDate, dayName: dayName });
-    }  
+    }
     return last7Days.reverse();
-  }
+  };
 
   const shareScreen = () => {};
-
+  let days = ["21/12/2023", "22/12/2023", "23/12/2023", "24/12/2023"];
   const calenderDays = () => {
     let last_7_days = getLast7Days();
-   // console.log("last 7 days " , last_7_days);
-    let days = [
-      "21/12/2023",
-     "22/12/2023", 
-     "23/12/2023", 
-     "24/12/2023"
-    ];
-    return last_7_days ;
+    //  console.log("last 7 days " , last_7_days);
+
+    return last_7_days;
   };
 
-  const setCalenderDate=(dateSelection)=>{
+  const setCalenderDate = (dateSelection) => {
     //console.log("date selected " , dateSelection);
     setDate(dateSelection);
-    setMenuVisible(false)
-  }
-  const calenderModal = () => {
-    return calenderDays().map((item,key) => {
-      return (
-           <TouchableOpacity
-            key={key} onPress={() => setCalenderDate(item.date)}
-            style={styles.calanderDate}
-            >
-             <Text>{item.date} ({item.dayName})</Text> </TouchableOpacity>        
-      );
-    });
+    setMenuVisible(false);
   };
+ 
+
+  const singleDateDisplay = (item, key) => {
+    return (
+      <TouchableOpacity
+        key={key}
+        onPress={() => setCalenderDate(item.date)}
+        style={styles.calanderDate}
+      >
+        <Text>{item.date} ({item.dayName})</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  
 
   const showMenu = () => {
     return (
@@ -83,8 +85,12 @@ const HeaderScreen = ({ navigation,setDate }) => {
           style={{ justifyContent: "flex-start", padding: 2 }}
         >
           <View>
-          <Text style={{fontWeight:"bold"}}>Select Past Result:</Text>
-          {calenderModal()}
+            <Text style={{ fontWeight: "bold" }}>Select Past Result:</Text>
+            <View style={{width:"100%"}}>
+              {calenderDays().map((item, index) => (
+               singleDateDisplay(item,index)
+              ))}
+            </View>
           </View>
         </Modal>
       </Portal>
@@ -125,11 +131,12 @@ const styles = StyleSheet.create({
     marginLeft: "10%",
     marginTop: "2%",
     top: 0,
-    padding:15
+    padding: 15,
   },
-  "calanderDate":{
-    padding:10
-  }
+  calanderDate: {
+    padding: 10,
+    width:"100%"
+  },
 });
 
 export default HeaderScreen;

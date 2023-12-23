@@ -34,7 +34,7 @@ const formatDate = (date) => {
   const decrypt_data=(data)=>{
     let decrypt_string = CryptoJS.AES.decrypt((data), ENCRYPT_KEY).toString(CryptoJS.enc.Utf8);
     let output = JSON.parse(decrypt_string);
-    console.log("dec output ", output);
+  //  console.log("dec output ", output);
     return output
   }
 

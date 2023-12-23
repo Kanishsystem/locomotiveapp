@@ -1,28 +1,30 @@
 import React,{useState,useEffect} from "react";
-import { View, Text, Button, StyleSheet, Image } from "react-native";
-import HeaderScreen from "./HeaderScreen";
+import { View, Text, StyleSheet } from "react-native";
 import TopIconBar from "./TopIconBar";
 import {  SCREEN_ONE_1_URL, SCREEN_ONE_2_URL } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
 import { useLoading } from "./Helpers/LoadingContext";
 import { formatDateDb,getDayNameFromString,getCurrentDate, decrypt_data } from "./api/CommonFunctions";
-import { SafeAreaView } from "react-native-web";
+
 
 
 const HomeNewScreen = ({ navigation,route }) => {
 
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const [secData, setSecData] = useState({});
-  const [cdate, setDate] = useState(getCurrentDate());
-  const { startLoading, stopLoading, setToast } = useLoading();
+ // const [cdate, setDate] = useState(getCurrentDate());
+  const { startLoading, stopLoading, setToast,cdate,setDate } = useLoading();
 
   const getData = async () => { 
-    console.log("date  " , cdate);   
+    //console.log("date  " , cdate);   
     startLoading();
     let url = SCREEN_ONE_1_URL + formatDateDb(cdate);
     let _data = await apiGetDataAwait(url); 
+   // console.log("called out test" , data)
     if (_data) {     
-      setData(decrypt_data(_data))
+      let dec_output = await decrypt_data(_data);
+    //  console.log("dout testttttuiinngggg  = ", dec_output);
+      setData(dec_output)
     }
     await getSecData();
     stopLoading();
@@ -39,7 +41,8 @@ const HomeNewScreen = ({ navigation,route }) => {
   };
 
   const getValue=(index)=>{
-    return data[index]!==undefined ? data[index] : "***";
+   // console.log(" data ", data, " index = ", index);
+    return data && data[index]!==undefined ? data[index] : "***";
   }
 
   const getSecValue=(index)=>{
@@ -57,8 +60,6 @@ const HomeNewScreen = ({ navigation,route }) => {
 
   return (
     <>
-    
-      <HeaderScreen setDate={setDate} />
       <TopIconBar navigation={navigation} setDate={setDate} route={route}/> 
       <View style={styles.mainContainer}>      
         <View style={styles.container_2}>

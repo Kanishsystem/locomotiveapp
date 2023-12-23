@@ -1,23 +1,14 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Navigation from "./src/Navigation";
-import { StatusBar } from "expo-status-bar";
-import { NavigationContainer } from "@react-navigation/native";
-import {
-  PaperProvider,
-  DefaultTheme
-} from "react-native-paper";
-import Cat2 from "./src/LocoMotive3d";
-import Loto6D from "./src/Loto6D";
-
+import { PaperProvider, DefaultTheme } from "react-native-paper";
 import { LoadingProvider } from "./src/Helpers/LoadingContext";
-import { SafeAreaView } from "react-native-web";
+import { StyleSheet,View,SafeAreaView,StatusBar} from 'react-native';
+
 
 const myCustomTheme = {
   ...DefaultTheme,
-
-  mode: "light", // Set the theme mode to 'light'
-  // Add more customizations as needed
+  mode: "light"
 };
 
 const Stack = createStackNavigator();
@@ -26,21 +17,23 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <>
-    
       <PaperProvider theme={myCustomTheme}>
         <LoadingProvider>
-          <StatusBar style="auto" />
-          <Navigation />
+          <SafeAreaView style={styles.container}>
+          <StatusBar backgroundColor="#5c0819" barStyle="light-content" /> 
+          
+            <Navigation />
+          </SafeAreaView>
         </LoadingProvider>
       </PaperProvider>
-      
     </>
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "red",
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0A4B44",
+  },
+});
+

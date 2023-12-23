@@ -10,8 +10,8 @@ import { formatDateDb,getCurrentDate } from "./api/CommonFunctions";
 const LocoMotive3d = ({ navigation,route }) => {
   const [data, setData] = useState({});
   const [secData, setSecData] = useState({});
-  const [cdate, setDate] = useState(getCurrentDate());
-  const { startLoading, stopLoading, setToast } = useLoading();
+  //const [cdate, setDate] = useState(getCurrentDate());
+  const { startLoading, stopLoading, setToast,cdate,setDate } = useLoading();
 
   const getData = async () => {    
     startLoading();
@@ -49,7 +49,7 @@ const LocoMotive3d = ({ navigation,route }) => {
   }, [cdate]);
   return (
     <>
-    <HeaderScreen setDate={setDate} />
+    
       <TopIconBar navigation={navigation} route={route} />
       <View style={styles.mainContainer}>       
         <View style={styles.container_2}>
