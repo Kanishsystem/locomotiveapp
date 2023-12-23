@@ -2,19 +2,21 @@ import React,{useState,useEffect} from "react";
 import { View, Text, Button, StyleSheet, Image } from "react-native";
 import HeaderScreen from "./HeaderScreen";
 import TopIconBar from "./TopIconBar";
-import { SCREEN_TWO_1_URL,SCREEN_ONE_2_URL  } from "./api/ApiUrls";
+import { SCREEN_TWO_1_URL,SCREEN_TWO_2_URL  } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
 import { useLoading } from "./Helpers/LoadingContext"
+import { formatDateDb,getCurrentDate } from "./api/CommonFunctions";
 
-const LocoMotive3d = ({ navigation }) => {
+const LocoMotive3d = ({ navigation,route }) => {
   const [data, setData] = useState({});
   const [secData, setSecData] = useState({});
-  const [cdate, setDate] = useState("");
+  const [cdate, setDate] = useState(getCurrentDate());
   const { startLoading, stopLoading, setToast } = useLoading();
 
   const getData = async () => {    
     startLoading();
-    let url = SCREEN_TWO_1_URL + cdate;
+    let url = SCREEN_TWO_1_URL + formatDateDb(cdate);
+    console.log(SCREEN_TWO_1_URL , " test " , url);
     let _data = await apiGetDataAwait(url);
     // console.log("profile ", data_user);
     if (_data) {     
@@ -25,7 +27,7 @@ const LocoMotive3d = ({ navigation }) => {
 
   const getSecData = async () => {    
     // startLoading();
-     let url = SCREEN_ONE_2_URL + cdate;
+     let url = SCREEN_TWO_2_URL + formatDateDb(cdate);
      let _data = await apiGetDataAwait(url); 
      if (_data) {     
        setSecData(decrypt_data(_data))
@@ -48,7 +50,7 @@ const LocoMotive3d = ({ navigation }) => {
   return (
     <>
     <HeaderScreen setDate={setDate} />
-      <TopIconBar navigation={navigation}  />
+      <TopIconBar navigation={navigation} route={route} />
       <View style={styles.mainContainer}>       
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 3D</Text>

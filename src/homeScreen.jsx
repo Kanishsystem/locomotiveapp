@@ -5,19 +5,20 @@ import TopIconBar from "./TopIconBar";
 import {  SCREEN_ONE_1_URL, SCREEN_ONE_2_URL } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
 import { useLoading } from "./Helpers/LoadingContext";
-import { formatDate,getDayName,getDayNameFromString,getCurrentDate, decrypt_data } from "./api/CommonFunctions";
+import { formatDateDb,getDayNameFromString,getCurrentDate, decrypt_data } from "./api/CommonFunctions";
 
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation,route }) => {
 
   const [data, setData] = useState({});
   const [secData, setSecData] = useState({});
   const [cdate, setDate] = useState(getCurrentDate());
   const { startLoading, stopLoading, setToast } = useLoading();
 
-  const getData = async () => {    
+  const getData = async () => { 
+    console.log("date  " , cdate);   
     startLoading();
-    let url = SCREEN_ONE_1_URL + cdate;
+    let url = SCREEN_ONE_1_URL + formatDateDb(cdate);
     let _data = await apiGetDataAwait(url); 
     if (_data) {     
       setData(decrypt_data(_data))
@@ -28,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
 
   const getSecData = async () => {    
    // startLoading();
-    let url = SCREEN_ONE_2_URL + cdate;
+    let url = SCREEN_ONE_2_URL + formatDateDb(cdate);
     let _data = await apiGetDataAwait(url); 
     if (_data) {     
       setSecData(decrypt_data(_data))
@@ -56,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <>
       <HeaderScreen setDate={setDate} />
-      <TopIconBar navigation={navigation} setDate={setDate}/> 
+      <TopIconBar navigation={navigation} setDate={setDate} route={route}/> 
       <View style={styles.mainContainer}>      
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 4D</Text>
