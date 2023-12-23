@@ -87,16 +87,16 @@ const HomeScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("special_3")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_4")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("special_5")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_6")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("special_7")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_8")}</Text>
             </View>
             <View style={styles.subViewBox}>
               <Text style={styles.subViewData}>5658</Text>
@@ -142,11 +142,11 @@ const HomeScreen = ({ navigation }) => {
           </View>
           <View style={styles.subContainer_1}>
             <View>
-              <Text style={styles.cat_text_2}>977</Text>
+              <Text style={styles.cat_text_2}>977222</Text>
               <Text style={styles.cat_text_2}>977</Text>
             </View>
             <View>
-              <Text style={styles.cat_text_2}>977</Text>
+              <Text style={styles.cat_text_2}>977222</Text>
               <Text style={styles.cat_text_2}>977</Text>
             </View>
             <View>

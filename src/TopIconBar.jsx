@@ -10,10 +10,10 @@ const TopIconBar = ({ navigation }) => {
   return (
     <View style={styles.TopView}>
         <TouchableOpacity onPress={() => setNavigation("screen1")}>
-          <Image source={IMAGES.lOGO} style={styles.image} />
+          <Image source={IMAGES.MAIN} style={styles.image} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setNavigation("screen2")}>
-          <Image source={IMAGES.TOP_TWO} style={styles.image} />
+          <Image source={IMAGES.MAIN} style={styles.image} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setNavigation("screen3")}>
           <Image source={IMAGES.MAIN} style={styles.image} />
