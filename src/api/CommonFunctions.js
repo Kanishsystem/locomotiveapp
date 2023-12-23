@@ -38,10 +38,27 @@ const formatDate = (date) => {
     return output
   }
 
+  const formatDateDb=(inputDateStr)=>{   
+      // Split the input date string into day, month, and year
+      var dateParts = inputDateStr.split("-");
+      //
+      return dateParts[2] +"-"+dateParts[1]+"-"+ dateParts[0];
+      
+      // Create a new Date object using the parts
+      var inputDate = new Date(dateParts[2], dateParts[1], dateParts[0]);
+      
+      // Format the date as "yyyy-mm-dd"
+      var outputDateStr = inputDate.toISOString().slice(0, 10);
+      
+      return outputDateStr;
+  
+  }
+
 export {
     getDayName,
     formatDate,
     getDayNameFromString,
     getCurrentDate,
-    decrypt_data
+    decrypt_data,
+    formatDateDb
 }

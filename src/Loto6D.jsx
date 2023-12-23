@@ -2,18 +2,19 @@ import React,{useState,useEffect} from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import HeaderScreen from "./HeaderScreen";
 import TopIconBar from "./TopIconBar";
-import { SCREEN_ONE_URL } from "./api/ApiUrls";
+import { SCREEN_THREE_URL } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
 import { useLoading } from "./Helpers/LoadingContext"
+import { formatDateDb,getCurrentDate} from "./api/CommonFunctions";
 
-const Loto6D = ({ navigation }) => {
+const Loto6D = ({ navigation,route }) => {
   const [data, setData] = useState({});
-  const [cdate, setDate] = useState("");
+  const [cdate, setDate] = useState(getCurrentDate());
   const { startLoading, stopLoading, setToast } = useLoading();
 
   const getData = async () => {    
     startLoading();
-    let url = SCREEN_ONE_URL + cdate;
+    let url = SCREEN_THREE_URL + formatDateDb(cdate);
     let _data = await apiGetDataAwait(url);
     // console.log("profile ", data_user);
     if (_data) {     
@@ -32,7 +33,7 @@ const Loto6D = ({ navigation }) => {
   return (
     <>
     <HeaderScreen setDate={setDate} />
-      <TopIconBar navigation={navigation} setDate={setDate}/>
+      <TopIconBar navigation={navigation}  route={route}/>
       <View style={styles.MainContainer}>
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 5D</Text>
