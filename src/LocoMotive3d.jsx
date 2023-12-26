@@ -1,74 +1,99 @@
-import React,{useState,useEffect} from "react";
-import { View, Text, Button, StyleSheet, Image } from "react-native";
-import HeaderScreen from "./HeaderScreen";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, } from "react-native";
 import TopIconBar from "./TopIconBar";
-import { SCREEN_TWO_1_URL,SCREEN_TWO_2_URL  } from "./api/ApiUrls";
+import { SCREEN_TWO_1_URL } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
-import { useLoading } from "./Helpers/LoadingContext"
-import { formatDateDb,getCurrentDate } from "./api/CommonFunctions";
+import { useLoading } from "./Helpers/LoadingContext";
+import { formatDateDb,decrypt_data,getDayNameFromString } from "./api/CommonFunctions";
+import { COLORS } from "./api/ImageSrc";
+//import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
-const LocoMotive3d = ({ navigation,route }) => {
-  const [data, setData] = useState({});
-  const [secData, setSecData] = useState({});
-  //const [cdate, setDate] = useState(getCurrentDate());
-  const { startLoading, stopLoading, setToast,cdate,setDate } = useLoading();
+const LocoMotive3d = ({ navigation, route }) => {
+  const [data, setData] = useState({}); 
+  const { startLoading, stopLoading, cdate,setMsg } = useLoading();
 
-  const getData = async () => {    
+  const getOther=(dt,index,max)=>{
+    let values = [];
+    for(let i=1;i<=max;i++){
+      let ind = index+"_"+i;
+      let single_value = getValueRes(dt,ind);
+      if(single_value){
+      values.push(single_value);   
+      }   
+    }
+    return values.join(" ");
+  }
+
+ const setMessage=(dt)=>{
+  let msg = "Locomatic " + getDayNameFromString(cdate) + "("+cdate+")\n";
+    msg +="1st:"+getValueRes(dt,"prize_1")+"\n";
+    msg +="2nd:"+getValueRes(dt,"prize_2")+"\n";
+    msg +="3rd:"+getValueRes(dt,"prize_3")+"\n";
+    msg +="Special:" + getOther(dt,"special",15)+"\n";
+    msg +="Consolation:" + getOther(dt,"special",15)+"\n";    
+    setMsg(msg);
+ }
+ const getValueRes=(dt,index)=>{
+  // console.log(" data ", data, " index = ", index);
+   return dt && dt[index]!==undefined ? dt[index] : "***";
+ }
+
+  const onSwipeGestureEvent = (event) => {
+    if (event.nativeEvent.translationX < -50 && event.nativeEvent.state === State.ACTIVE) {
+      // If swiped from right to left, navigate to AnotherScreen
+      navigation.navigate('screen3');
+      //console.log("testing swipe")
+    }
+    if (event.nativeEvent.translationX > 50 && event.nativeEvent.state === State.ACTIVE) {
+      // If swiped from left to right, navigate to AnotherScreen
+      navigation.navigate('screen1');
+    }
+  };
+
+  const getData = async () => {
     startLoading();
     let url = SCREEN_TWO_1_URL + formatDateDb(cdate);
-    console.log(SCREEN_TWO_1_URL , " test " , url);
+   // console.log(SCREEN_TWO_1_URL, " test ", url);
     let _data = await apiGetDataAwait(url);
     // console.log("profile ", data_user);
-    if (_data) {     
-      setData(_data)
+    if (_data) {
+      let dec_output = decrypt_data(_data);
+      setData(dec_output)
+      setMessage(dec_output);
     }
     stopLoading();
   };
 
-  const getSecData = async () => {    
-    // startLoading();
-     let url = SCREEN_TWO_2_URL + formatDateDb(cdate);
-     let _data = await apiGetDataAwait(url); 
-     if (_data) {     
-       setSecData(decrypt_data(_data))
-     }
-     //stopLoading();
-   };
 
-   
-  const getValue=(index)=>{
-    return data[index]!==undefined ? data[index] : "***";
-  }
+  const getValue = (index) => {
+    return data[index] !== undefined ? data[index] : "***";
+  };
 
-  const getSecValue=(index)=>{
-    return secData[index]!==undefined ? secData[index] : "***";
-  }
   useEffect(() => {
     getData();
-    getSecData();
+  
   }, [cdate]);
   return (
     <>
-    
       <TopIconBar navigation={navigation} route={route} />
-      <View style={styles.mainContainer}>       
+      {/*<PanGestureHandler
+        onGestureEvent={onSwipeGestureEvent}
+        minDeltaX={10} // Minimum horizontal distance for the gesture to be considered a swipe
+  >*/}
+      <View style={styles.mainContainer}>
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 3D</Text>
-          <Text style={styles.subText}>2-12-2023 (sun)</Text>
+          <Text style={styles.subText}>{cdate}( {getDayNameFromString(cdate)})</Text>
         </View>
         <View style={styles.container_3}>
-        
           <View style={styles.subContainer}>
             <View>
-            
               <Text style={styles.cat_text}>1st</Text>
             </View>
             <View>
-             
               <Text style={styles.cat_text}>2nd</Text>
             </View>
             <View>
-             
               <Text style={styles.cat_text}>3rd</Text>
             </View>
           </View>
@@ -85,37 +110,35 @@ const LocoMotive3d = ({ navigation,route }) => {
               <Text style={styles.subHeading}>Special</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
-            </View>
-
-            <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("special_1")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_2")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("special_3")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_4")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("special_5")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_6")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("special_7")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_8")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("special_9")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_10")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("special_11")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_12")}</Text>
+            </View>
+            <View style={styles.subViewBox}>
+              <Text style={styles.subViewData}>{getValue("special_13")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_14")}</Text>
             </View>
             <View style={styles.subViewBox_1}>
-              <Text style={styles.subViewData}>565</Text>
-              
+              <Text style={styles.subViewData}>{getValue("special_15")}</Text>
             </View>
           </View>
           <View style={styles.subView}>
@@ -123,84 +146,40 @@ const LocoMotive3d = ({ navigation,route }) => {
               <Text style={styles.subHeading}>Consolation</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("cons_1")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_2")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("cons_3")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_4")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("cons_5")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_6")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("cons_7")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_8")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("cons_9")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_10")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("cons_11")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_12")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>565</Text>
-              <Text style={styles.subViewData}>461</Text>
+              <Text style={styles.subViewData}>{getValue("cons_13")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_14")}</Text>
             </View>
             <View style={styles.subViewBox_1}>
-              <Text style={styles.subViewData}>565</Text>
-              
+              <Text style={styles.subViewData}>{getValue("cons_15")}</Text>
             </View>
           </View>
-        </View>
-
-        {/* <View style={styles.container_2}>
-          <Text style={styles.text}>Lotomatic Gold</Text>
-          <Text style={styles.subText}>20-12-2023 (sun)</Text>
-        </View> */}
-        {/* <View style={styles.container_6}>
-          <View style={styles.subContainer}>
-            <Text style={styles.cat_text}>1st</Text>
-            <Text style={styles.cat_text}>2nd</Text>
-            <Text style={styles.cat_text}>3rd</Text>
-          </View>
-          <View style={styles.subContainer_1}>
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-          </View>
-          <View style={styles.subContainer}>
-            <Text style={styles.cat_text}>Bonus</Text>
-            <Text style={styles.cat_text}>Bonus</Text>
-            <Text style={styles.cat_text}>Bonus</Text>
-          </View>
-        </View> */}
+        </View>       
       </View>
+      {/*</PanGestureHandler> */}
     </>
   );
 };
@@ -287,8 +266,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   cat_text: {
-    color: "red",
+    color: COLORS.TEXT,
     fontSize: 20,
+    fontWeight:"700"
   },
   cat_text_1: {
     fontWeight: "600",
@@ -315,7 +295,6 @@ const styles = StyleSheet.create({
   container_4: {
     display: "flex",
     flexDirection: "row",
-    
   },
   subHeading: {
     fontWeight: "bold",
@@ -328,8 +307,7 @@ const styles = StyleSheet.create({
   subViewBox_1: {
     display: "flex",
     flexDirection: "row",
-    marginLeft:20
-   
+    marginLeft: 20,
   },
   subViewData: {
     fontSize: 20,

@@ -1,43 +1,105 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import HeaderScreen from "./HeaderScreen";
 import TopIconBar from "./TopIconBar";
-import { SCREEN_THREE_URL } from "./api/ApiUrls";
+import { SCREEN_THREE_1_URL, SCREEN_THREE_2_URL } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
-import { useLoading } from "./Helpers/LoadingContext"
-import { formatDateDb,getCurrentDate} from "./api/CommonFunctions";
+import { useLoading } from "./Helpers/LoadingContext";
+import {
+  formatDateDb, 
+  decrypt_data,
+  getDayNameFromString
+} from "./api/CommonFunctions";
+import DigitShow from "./Helpers/DigitShow";
+import { COLORS } from "./api/ImageSrc";
+//import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
-const LotoMotive6d = ({ navigation,route }) => {
+const LotoMotive6d = ({ navigation, route }) => {
   const [data, setData] = useState({});
-  //const [cdate, setDate] = useState(getCurrentDate());
-  const { startLoading, stopLoading, setToast,cdate,setDate } = useLoading();
+  const [secData, setSecData] = useState({});
+  const { startLoading, stopLoading, setToast, cdate, setDate,setMsg } = useLoading();
 
-  const getData = async () => {    
+  const getOther=(dt,index,max)=>{
+    let values = [];
+    for(let i=1;i<=max;i++){
+      let ind = index+"_"+i;
+      let single_value = getValueRes(dt,ind);
+      if(single_value){
+      values.push(single_value);   
+      }   
+    }
+    return values.join(" ");
+  }
+
+ const setMessage=(dt)=>{
+  let msg = "Locomatic " + getDayNameFromString(cdate) + "("+cdate+")\n";
+    msg +="1st:"+getValueRes(dt,"prize_1")+"\n";
+    msg +="2nd:"+getValueRes(dt,"prize_2")+"\n";
+    msg +="3rd:"+getValueRes(dt,"prize_3")+"\n";
+    msg +="4th:"+getValueRes(dt,"prize_4")+"\n";
+    msg +="5th:"+getValueRes(dt,"prize_5")+"\n";
+    msg +="6th:"+getValueRes(dt,"prize_6")+"\n";
+   // msg +="Special:" + getOther(dt,"special",10)+"\n";
+    //msg +="Consolation:" + getOther(dt,"special",10)+"\n";    
+    setMsg(msg);
+ }
+
+ const getValueRes=(dt,index)=>{
+  // console.log(" data ", data, " index = ", index);
+   return dt && dt[index]!==undefined ? dt[index] : "***";
+ }
+  const onSwipeGestureEvent = (event) => {   
+    if (event.nativeEvent.translationX > 50 && event.nativeEvent.state === State.ACTIVE) {
+      // If swiped from left to right, navigate to AnotherScreen
+      navigation.navigate('screen2');
+    }
+  };
+
+  const getData = async () => {
     startLoading();
-    let url = SCREEN_THREE_URL + formatDateDb(cdate);
+    let url = SCREEN_THREE_1_URL + formatDateDb(cdate);
     let _data = await apiGetDataAwait(url);
-    // console.log("profile ", data_user);
-    if (_data) {     
-      setData(_data)
+    if (_data) {
+      let dec_output = decrypt_data(_data);
+      setData(dec_output)
+      setMessage(dec_output);
     }
     stopLoading();
   };
 
-  const getValue=(index)=>{
-    return data[index]!==undefined ? data[index] : "";
-  }
+  const getValue = (index) => {
+    return data[index] !== undefined ? data[index] : "";
+  };
+
+  const getSecValue = (index) => {
+    return secData[index] !== undefined ? secData[index] : "";
+  };
+
+  const getSecData = async () => {
+    // startLoading();
+    let url = SCREEN_THREE_2_URL + formatDateDb(cdate);
+    let _data = await apiGetDataAwait(url);
+    if (_data) {
+      setSecData(decrypt_data(_data));
+    }
+    //stopLoading();
+  };
 
   useEffect(() => {
-  //  getData()
+    getData();
+    getSecData();
   }, [cdate]);
   return (
     <>
-  
-      <TopIconBar navigation={navigation}  route={route}/>
+      <TopIconBar navigation={navigation} route={route} />
+      {/*<PanGestureHandler
+        onGestureEvent={onSwipeGestureEvent}
+        minDeltaX={10} // Minimum horizontal distance for the gesture to be considered a swipe
+  >*/}
       <View style={styles.MainContainer}>
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 5D</Text>
-          <Text style={styles.subText}>20-12-2023 (sun)</Text>
+          <Text style={styles.subText}>{cdate}( {getDayNameFromString(cdate)})</Text>
         </View>
         <View style={styles.container_3}>
           <View style={styles.subContainer}>
@@ -47,28 +109,9 @@ const LotoMotive6d = ({ navigation,route }) => {
               <Text style={styles.heading}>3rd</Text>
             </View>
             <View style={styles.MainValue}>
-              <View style={styles.subValue}>
-                <Text style={styles.cat_text_1}>1</Text>
-                <Text style={styles.cat_text_1}>2</Text>
-                <Text style={styles.cat_text_1}>3</Text>
-                <Text style={styles.cat_text_1}>4</Text>
-                <Text style={styles.cat_text_1}>5</Text>
-              </View>
-
-              <View style={styles.subValue}>
-                <Text style={styles.cat_text_1}>1</Text>
-                <Text style={styles.cat_text_1}>2</Text>
-                <Text style={styles.cat_text_1}>3</Text>
-                <Text style={styles.cat_text_1}>4</Text>
-                <Text style={styles.cat_text_1}>5</Text>
-              </View>
-              <View style={styles.subValue}>
-                <Text style={styles.cat_text_1}>1</Text>
-                <Text style={styles.cat_text_1}>2</Text>
-                <Text style={styles.cat_text_1}>3</Text>
-                <Text style={styles.cat_text_1}>4</Text>
-                <Text style={styles.cat_text_1}>5</Text>
-              </View>
+              <DigitShow digits={5} value={getValue("prize_1")} type="end" />
+              <DigitShow digits={5} value={getValue("prize_2")} type="end" />
+              <DigitShow digits={5} value={getValue("prize_3")} type="end" />
             </View>
           </View>
           <View style={styles.subContainer}>
@@ -78,37 +121,16 @@ const LotoMotive6d = ({ navigation,route }) => {
               <Text style={styles.heading}>6th</Text>
             </View>
             <View style={styles.MainValue}>
-              <View style={styles.subValue}>
-                <Text style={styles.cat_text_1}>.</Text>
-                <Text style={styles.cat_text_1}>2</Text>
-                <Text style={styles.cat_text_1}>3</Text>
-                <Text style={styles.cat_text_1}>4</Text>
-                <Text style={styles.cat_text_1}>5</Text>
-              </View>
-
-              <View style={styles.subValue}>
-                <Text style={styles.cat_text_1}>
-                  h
-                </Text>
-                <Text style={styles.cat_text_1}>.</Text>
-                <Text style={styles.cat_text_1}>3</Text>
-                <Text style={styles.cat_text_1}>4</Text>
-                <Text style={styles.cat_text_1}>5</Text>
-              </View>
-              <View style={styles.subValue}>
-                <Text style={styles.cat_text_1}>.</Text>
-                <Text style={styles.cat_text_1}>.</Text>
-                <Text style={styles.cat_text_1}>.</Text>
-                <Text style={styles.cat_text_1}>4</Text>
-                <Text style={styles.cat_text_1}>4</Text>
-              </View>
+              <DigitShow digits={5} value={getValue("prize_4")} type="end" />
+              <DigitShow digits={5} value={getValue("prize_5")} type="end" />
+              <DigitShow digits={5} value={getValue("prize_6")} type="end" />
             </View>
           </View>
         </View>
-        
+
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 6D</Text>
-          <Text style={styles.subText}>20-12-2023 (sun)</Text>
+          <Text style={styles.subText}>{cdate}( {getDayNameFromString(cdate)})</Text>
         </View>
         <View style={styles.container_3}>
           <View style={styles.subContainer_2}>
@@ -120,102 +142,74 @@ const LotoMotive6d = ({ navigation,route }) => {
               <Text style={styles.heading}>5th</Text>
             </View>
             <View style={styles.MainValue}>
-              <View style={styles.subValue}>
-                <Text style={styles.cat_text_1}>1</Text>
-                <Text style={styles.cat_text_1}>2</Text>
-                <Text style={styles.cat_text_1}>3</Text>
-                <Text style={styles.cat_text_1}>4</Text>
-                <Text style={styles.cat_text_1}>5</Text>
-                <Text style={styles.cat_text_1}>6</Text>
+              <View style={[styles.mainValue, { justifyContent: "center" }]}>
+                <DigitShow digits={6} value={getSecValue("prize_1")} type="end" />
               </View>
               <View style={styles.mainValue}>
-                <View style={styles.subValue}>
-                  <Text style={styles.cat_text_1}>1</Text>
-                  <Text style={styles.cat_text_1}>2</Text>
-                  <Text style={styles.cat_text_1}>3</Text>
-                  <Text style={styles.cat_text_1}>4</Text>
-                  <Text style={styles.cat_text_1}>5</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                </View>
+                <DigitShow
+                  digits={6}
+                  value={getSecValue("special_1")}
+                  type="end"
+                />
                 <View style={styles.or}>
                   <Text>or</Text>
                 </View>
-                <View style={styles.subValue}>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>2</Text>
-                  <Text style={styles.cat_text_1}>3</Text>
-                  <Text style={styles.cat_text_1}>4</Text>
-                  <Text style={styles.cat_text_1}>5</Text>
-                  <Text style={styles.cat_text_1}>6</Text>
-                </View>
+                <DigitShow
+                  digits={6}
+                  value={getSecValue("special_2")}
+                  type="start"
+                />
               </View>
               <View style={styles.mainValue}>
-                <View style={styles.subValue}>
-                  <Text style={styles.cat_text_1}>1</Text>
-                  <Text style={styles.cat_text_1}>2</Text>
-                  <Text style={styles.cat_text_1}>3</Text>
-                  <Text style={styles.cat_text_1}>4</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                </View>
+                <DigitShow
+                  digits={6}
+                  value={getSecValue("special_3")}
+                  type="end"
+                />
                 <View style={styles.or}>
                   <Text>or</Text>
                 </View>
-                <View style={styles.subValue}>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>3</Text>
-                  <Text style={styles.cat_text_1}>4</Text>
-                  <Text style={styles.cat_text_1}>5</Text>
-                  <Text style={styles.cat_text_1}>6</Text>
-                </View>
+                <DigitShow
+                  digits={6}
+                  value={getSecValue("special_4")}
+                  type="start"
+                />
               </View>
               <View style={styles.mainValue}>
-                <View style={styles.subValue}>
-                  <Text style={styles.cat_text_1}>1</Text>
-                  <Text style={styles.cat_text_1}>2</Text>
-                  <Text style={styles.cat_text_1}>3</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                </View>
+                <DigitShow
+                  digits={6}
+                  value={getSecValue("special_5")}
+                  type="end"
+                />
                 <View style={styles.or}>
                   <Text>or</Text>
                 </View>
-                <View style={styles.subValue}>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>4</Text>
-                  <Text style={styles.cat_text_1}>5</Text>
-                  <Text style={styles.cat_text_1}>6</Text>
-                </View>
+                <DigitShow
+                  digits={6}
+                  value={getSecValue("special_6")}
+                  type="start"
+                />
               </View>
               <View style={styles.mainValue}>
-                <View style={styles.subValue}>
-                  <Text style={styles.cat_text_1}>1</Text>
-                  <Text style={styles.cat_text_1}>2</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                </View>
+                <DigitShow
+                  digits={6}
+                  value={getSecValue("special_7")}
+                  type="end"
+                />
                 <View style={styles.or}>
                   <Text>or</Text>
                 </View>
-                <View style={styles.subValue}>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>.</Text>
-                  <Text style={styles.cat_text_1}>5</Text>
-                  <Text style={styles.cat_text_1}>6</Text>
-                </View>
+                <DigitShow
+                  digits={6}
+                  value={getSecValue("special_8")}
+                  type="start"
+                />
               </View>
             </View>
           </View>
         </View>
       </View>
+       {/*</PanGestureHandler> */}
     </>
   );
 };
@@ -266,9 +260,10 @@ const styles = StyleSheet.create({
   },
 
   heading: {
-    color: "red",
+    color: COLORS.TEXT,
     fontSize: 20,
     marginVertical: 15,
+    fontWeight: "700",
   },
   subValue: {
     display: "flex",

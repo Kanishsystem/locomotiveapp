@@ -4,6 +4,8 @@ import Navigation from "./src/Navigation";
 import { PaperProvider, DefaultTheme } from "react-native-paper";
 import { LoadingProvider } from "./src/Helpers/LoadingContext";
 import { StyleSheet,View,SafeAreaView,StatusBar} from 'react-native';
+import 'react-native-gesture-handler';
+import { COLORS } from "./src/api/ImageSrc";
 
 
 const myCustomTheme = {
@@ -20,7 +22,7 @@ export default function App() {
       <PaperProvider theme={myCustomTheme}>
         <LoadingProvider>
           <SafeAreaView style={styles.container}>
-          <StatusBar backgroundColor="#5c0819" barStyle="light-content" /> 
+          <StatusBar backgroundColor={COLORS.MAIN} barStyle="light-content" /> 
           
             <Navigation />
           </SafeAreaView>

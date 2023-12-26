@@ -18,10 +18,10 @@ const TopIconBar = ({ navigation,route }) => {
         <TouchableOpacity onPress={() => setNavigation("screen1")} style={[styles.iconcont,getActiveStyle("screen1")]}>
           <Image source={IMAGES.MAIN} style={styles.image} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setNavigation("screen2")} style={getActiveStyle("screen2")} >
+        <TouchableOpacity onPress={() => setNavigation("screen2")} style={[styles.iconcont,getActiveStyle("screen2")]} >
           <Image source={IMAGES.MAIN} style={styles.image} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setNavigation("screen3")} style={getActiveStyle("screen3")} >
+        <TouchableOpacity onPress={() => setNavigation("screen3")} style={[styles.iconcont,getActiveStyle("screen3")]} >
           <Image source={IMAGES.MAIN} style={styles.image} />
         </TouchableOpacity>
     </View>
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width:50,
-    height:50
+    height:50,
+    resizeMode: 'contain'
   }, 
   active:{
     borderWidth:1,

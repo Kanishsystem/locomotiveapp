@@ -1,10 +1,39 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  Share,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Modal, Portal } from "react-native-paper";
+import { COLORS } from "./api/ImageSrc";
 
-const HeaderScreen = ({ navigation, setDate }) => {
+const HeaderScreen = ({ navigation, setDate, msg }) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
+
+  const handleShareNew = async () => {
+    try {
+      let url = "https://thebooksparadise.com/";
+      // let msg = 'Lotomatic ( \n next line message'
+      let msg_share = msg;
+      msg_share += "\n";
+      msg_share += "\n";
+      msg_share +="*Live 3D Results "+ url ;
+      //console.log("msg = ", msg);
+      const result = await Share.share({
+        message: msg_share,
+      });
+      if (result.action === Share.sharedAction) {
+        console.log("text shared");
+      }
+    } catch (error) {
+      console.error("Error while sharing:", error.message);
+    }
+  };
+
   const topMenu = () => {
     return (
       <View style={styles.TopView}>
@@ -16,7 +45,7 @@ const HeaderScreen = ({ navigation, setDate }) => {
           >
             <Icon name="calendar" size={30} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => shareScreen()}>
+          <TouchableOpacity onPress={() => handleShareNew()}>
             <Icon name="share" size={30} color="white" />
           </TouchableOpacity>
         </View>
@@ -59,7 +88,6 @@ const HeaderScreen = ({ navigation, setDate }) => {
     setDate(dateSelection);
     setMenuVisible(false);
   };
- 
 
   const singleDateDisplay = (item, key) => {
     return (
@@ -68,12 +96,12 @@ const HeaderScreen = ({ navigation, setDate }) => {
         onPress={() => setCalenderDate(item.date)}
         style={styles.calanderDate}
       >
-        <Text>{item.date} ({item.dayName})</Text>
+        <Text>
+          {item.date} ({item.dayName})
+        </Text>
       </TouchableOpacity>
     );
   };
-
-  
 
   const showMenu = () => {
     return (
@@ -86,10 +114,10 @@ const HeaderScreen = ({ navigation, setDate }) => {
         >
           <View>
             <Text style={{ fontWeight: "bold" }}>Select Past Result:</Text>
-            <View style={{width:"100%"}}>
-              {calenderDays().map((item, index) => (
-               singleDateDisplay(item,index)
-              ))}
+            <View style={{ width: "100%" }}>
+              {calenderDays().map((item, index) =>
+                singleDateDisplay(item, index)
+              )}
             </View>
           </View>
         </Modal>
@@ -107,11 +135,11 @@ const HeaderScreen = ({ navigation, setDate }) => {
 
 const styles = StyleSheet.create({
   TopView: {
-    backgroundColor: "#5c0819",
-    height: 45,
+    backgroundColor: COLORS.MAIN,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    padding: 10,
   },
   iconBox: {
     display: "flex",
@@ -135,7 +163,7 @@ const styles = StyleSheet.create({
   },
   calanderDate: {
     padding: 10,
-    width:"100%"
+    width: "100%",
   },
 });
 

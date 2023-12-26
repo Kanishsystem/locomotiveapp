@@ -5,7 +5,8 @@ import {  SCREEN_ONE_1_URL, SCREEN_ONE_2_URL } from "./api/ApiUrls";
 import { apiGetDataAwait } from "./api/ApiManager";
 import { useLoading } from "./Helpers/LoadingContext";
 import { formatDateDb,getDayNameFromString,getCurrentDate, decrypt_data } from "./api/CommonFunctions";
-
+import { COLORS } from "./api/ImageSrc";
+//import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 
 const HomeNewScreen = ({ navigation,route }) => {
@@ -13,18 +14,50 @@ const HomeNewScreen = ({ navigation,route }) => {
   const [data, setData] = useState(null);
   const [secData, setSecData] = useState({});
  // const [cdate, setDate] = useState(getCurrentDate());
-  const { startLoading, stopLoading, setToast,cdate,setDate } = useLoading();
+  const { startLoading, stopLoading, setToast,cdate,setDate,setMsg } = useLoading();
+
+  const onSwipeGestureEvent = (event) => {
+    if (event.nativeEvent.translationX < -50 && event.nativeEvent.state === State.ACTIVE) {
+      // If swiped from right to left, navigate to AnotherScreen
+      navigation.navigate('screen2');
+     // console.log("testing swipe")
+    }
+  };
+
+  const getOther=(dt,index,max)=>{
+    let values = [];
+    for(let i=1;i<=max;i++){
+      let ind = index+"_"+i;
+      let single_value = getValueRes(dt,ind);
+      if(single_value){
+      values.push(single_value);   
+      }   
+    }
+    return values.join(" ");
+  }
+
+ const setMessage=(dt)=>{
+  let msg = "Locomatic " + getDayNameFromString(cdate) + "("+cdate+")\n";
+    msg +="1st:"+getValueRes(dt,"prize_1")+"\n";
+    msg +="2nd:"+getValueRes(dt,"prize_2")+"\n";
+    msg +="3rd:"+getValueRes(dt,"prize_3")+"\n";
+    msg +="Special:" + getOther(dt,"special",10)+"\n";
+    msg +="Consolation:" + getOther(dt,"special",10)+"\n";    
+    setMsg(msg);
+ }
 
   const getData = async () => { 
     //console.log("date  " , cdate);   
     startLoading();
     let url = SCREEN_ONE_1_URL + formatDateDb(cdate);
+    console.log("url ", url);
     let _data = await apiGetDataAwait(url); 
    // console.log("called out test" , data)
     if (_data) {     
       let dec_output = await decrypt_data(_data);
-    //  console.log("dout testttttuiinngggg  = ", dec_output);
-      setData(dec_output)
+      console.log("dout testttttuiinngggg  = ", dec_output);
+      setData(dec_output);
+      setMessage(dec_output);
     }
     await getSecData();
     stopLoading();
@@ -45,6 +78,11 @@ const HomeNewScreen = ({ navigation,route }) => {
     return data && data[index]!==undefined ? data[index] : "***";
   }
 
+  const getValueRes=(dt,index)=>{
+    // console.log(" data ", data, " index = ", index);
+     return dt && dt[index]!==undefined ? dt[index] : "***";
+   }
+
   const getSecValue=(index)=>{
     return secData[index]!==undefined ? secData[index] : "***";
   }
@@ -61,12 +99,17 @@ const HomeNewScreen = ({ navigation,route }) => {
   return (
     <>
       <TopIconBar navigation={navigation} setDate={setDate} route={route}/> 
-      <View style={styles.mainContainer}>      
+      {/*<PanGestureHandler
+        onGestureEvent={onSwipeGestureEvent}
+        minDeltaX={10} // Minimum horizontal distance for the gesture to be considered a swipe
+  >*/}
+      <View style={styles.mainContainer}>   
+    
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 4D</Text>
           <Text style={styles.subText}>{cdate} ({getDayNameFromString(cdate)})</Text>
         </View>
-
+           
         <View style={styles.container_3}>
           <View style={styles.subContainer}>
             <Text style={styles.cat_text}>1st</Text>
@@ -103,8 +146,8 @@ const HomeNewScreen = ({ navigation,route }) => {
               <Text style={styles.subViewData}>{getValue("special_8")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("special_9")}</Text>
+              <Text style={styles.subViewData}>{getValue("special_10")}</Text>
             </View>
           </View>
           <View style={styles.subView}>
@@ -112,24 +155,24 @@ const HomeNewScreen = ({ navigation,route }) => {
               <Text style={styles.subHeading}>Consolation</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("cons_1")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_2")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("cons_3")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_4")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("cons_5")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_6")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("cons_7")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_8")}</Text>
             </View>
             <View style={styles.subViewBox}>
-              <Text style={styles.subViewData}>5658</Text>
-              <Text style={styles.subViewData}>4613</Text>
+              <Text style={styles.subViewData}>{getValue("cons_9")}</Text>
+              <Text style={styles.subViewData}>{getValue("cons_10")}</Text>
             </View>
           </View>
         </View>
@@ -141,44 +184,18 @@ const HomeNewScreen = ({ navigation,route }) => {
         <View style={styles.container_6}>
           <View style={styles.subContainer}>
             <Text style={styles.cat_text}>1st</Text>
-            {/* <Text style={styles.cat_text}>2nd</Text>
-            <Text style={styles.cat_text}>3rd</Text> */}
+           
           </View>
           <View style={styles.subContainer_1}>
             <View>
-              <Text style={styles.cat_text_2}>977222</Text>
-              {/* <Text style={styles.cat_text_2}>977</Text> */}
-            </View>
-            {/* <View>
-              <Text style={styles.cat_text_2}>977222</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View>
-            <View>
-              <Text style={styles.cat_text_2}>977</Text>
-              <Text style={styles.cat_text_2}>977</Text>
-            </View> */}
+              <Text style={styles.cat_text_2}>{getSecValue("prize_1")}</Text>
+             
+            </View>          
           </View>
-          {/* <View style={styles.subContainer}>
-            <Text style={styles.cat_text}>Bonus</Text>
-            <Text style={styles.cat_text}>Bonus</Text>
-            <Text style={styles.cat_text}>Bonus</Text>
-          </View> */}
+        
         </View>
       </View>  
-       
+      {/*</PanGestureHandler> */}
     </>
   );
 };
@@ -186,40 +203,7 @@ const HomeNewScreen = ({ navigation,route }) => {
 const styles = StyleSheet.create({
   mainContainer: {
     marginHorizontal: 3,
-  },
-  TopView: {
-    backgroundColor: "#5c0819",
-    height: 45,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  ImageBox: {
-    borderRadius: "50%",
-    width: 50,
-    height: 50,
-    position: "relative",
-    overflow: "hidden",
-  },
-  iconBox: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  image: {
-    width: 50,
-    height: 50,
-  },
-  TopHeading: {
-    fontSize: 20,
-    color: "white",
-    fontWeight: "700",
-    marginLeft: 10,
-  },
-  container_1: {
-    backgroundColor: "#73716b",
-    height: 45,
-  },
+  },  
   container_2: {
     height: 50,
     backgroundColor: "#f7e2a8",
@@ -265,8 +249,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   cat_text: {
-    color: "red",
+    color: COLORS.TEXT,
     fontSize: 20,
+    fontWeight:"700"
   },
   cat_text_1: {
     fontWeight: "600",

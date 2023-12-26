@@ -11,10 +11,10 @@ import HeaderScreen from './HeaderScreen';
 const Stack = createStackNavigator();
 
 const Navigation = () => {
-  const { setDate } = useLoading();
+  const { setDate,msg } = useLoading();
   return (
     <>
-    <HeaderScreen setDate={setDate} />   
+    <HeaderScreen setDate={setDate} msg={msg} />   
     <NavigationContainer>
       <Stack.Navigator    screenOptions={{
           headerShown: false,}} >

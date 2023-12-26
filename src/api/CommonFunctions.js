@@ -27,8 +27,10 @@ const formatDate = (date) => {
   const getDayNameFromString = (dateString) => {
     const [day, month, year] = dateString.split('-');
     const dateObject = new Date(`${year}-${month}-${day}`);
-    const options = { weekday: 'short' };
-    return dateObject.toLocaleDateString('en-US', options);
+    const dayOfWeek = dateObject.getDay();
+    return getDayName(dayOfWeek);
+    //const options = { weekday: 'short' };
+    //return dateObject.toLocaleDateString('en-US', options);
   };
 
   const decrypt_data=(data)=>{

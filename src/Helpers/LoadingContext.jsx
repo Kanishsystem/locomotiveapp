@@ -8,6 +8,7 @@ const LoadingContext = createContext();
 const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);  
   const [toast, setToastMessage] = useState(""); 
+  const [msg, setMsg] = useState(""); 
   const [cdate, setDate] = useState(getCurrentDate()); 
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
@@ -68,7 +69,7 @@ const LoadingProvider = ({ children }) => {
   }
 
   return (
-    <LoadingContext.Provider value={{ loading, startLoading, stopLoading, setToast,cdate,setDate }}>
+    <LoadingContext.Provider value={{ loading, startLoading, stopLoading, setToast,cdate,setDate,msg,setMsg }}>
       {children}
       {loading && (
         <View style={{
