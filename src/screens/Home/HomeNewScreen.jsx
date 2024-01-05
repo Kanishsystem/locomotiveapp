@@ -8,11 +8,11 @@ import {
   formatDateDb,
   getDayNameFromString,
   decrypt_data,
+  reverseDateDb
 } from "../../api/CommonFunctions";
 import { COLORS } from "../../api/ImageSrc";
 import MenuComponent from "./../Main/MenuCompoenent";
 //import { PanGestureHandler, State } from "react-native-gesture-handler";
-
 
 const HomeNewScreen = ({ navigation, route }) => {
   const [data, setData] = useState(null);
@@ -76,17 +76,17 @@ const HomeNewScreen = ({ navigation, route }) => {
     //console.log("date  " , cdate);
     startLoading();
     let url = SCREEN_ONE_1_URL + formatDateDb(cdate);
-    // console.log("url ", url);
+    console.log("url ", url, "cdate ", cdate);
     try {
       // setToast("started data = ");
       let _data = await apiGetDataAwait(url);
-      setToast("testing data = " + _data);
+      //setToast("testing data = " + _data);
       // console.log("called out test" , _data)
       if (_data) {
         // setRaw(_data);
         let dec_output = await decrypt_data(_data);
         // setToast(" description  data");
-        // console.log("dout testttttuiinngggg  = ", dec_output);
+        console.log("dout testttttuiinngggg  = ", dec_output);
         setData(dec_output);
         setMessage(dec_output);
       }
@@ -123,6 +123,14 @@ const HomeNewScreen = ({ navigation, route }) => {
     return secData[index] !== undefined ? secData[index] : "";
   };
 
+  const date_selection_display = (input_date) => {
+    let formatted_date = cdate;
+    if (input_date && input_date.length > 6) {
+      formatted_date = reverseDateDb(input_date);
+    }
+    return formatted_date + "(" + getDayNameFromString(formatted_date) + ")";
+  };
+
   useEffect(() => {
     // console.log("testing control");
     getData();
@@ -140,12 +148,11 @@ const HomeNewScreen = ({ navigation, route }) => {
         minDeltaX={10} // Minimum horizontal distance for the gesture to be considered a swipe
   > */}
       <View style={styles.mainContainer}>
-      <TouchableOpacity onPress={rightSwipeHandler}>
-    
+        <TouchableOpacity onPress={rightSwipeHandler}>
           <View style={styles.container_2}>
             <Text style={styles.text}>Lotomatic 4D</Text>
             <Text style={styles.subText}>
-              {cdate} ({getDayNameFromString(cdate)})
+              {date_selection_display(getValue("cat_date"))}
             </Text>
           </View>
 
@@ -219,7 +226,7 @@ const HomeNewScreen = ({ navigation, route }) => {
           <View style={styles.container_2}>
             <Text style={styles.text}>Lotomatic Gold</Text>
             <Text style={styles.subText}>
-              {cdate} ({getDayNameFromString(cdate)})
+            {date_selection_display(getSecValue("cat_date"))}
             </Text>
           </View>
           <View style={styles.container_6}>
@@ -232,7 +239,6 @@ const HomeNewScreen = ({ navigation, route }) => {
               </View>
             </View>
           </View>
-       
         </TouchableOpacity>
       </View>
       {/* </PanGestureHandler> */}
@@ -337,7 +343,7 @@ const styles = StyleSheet.create({
   rightActionsContainer: {
     alignItems: "center",
     justifyContent: "center",
-   // backgroundColor: "green",
+    // backgroundColor: "green",
     width: 80,
   },
 });

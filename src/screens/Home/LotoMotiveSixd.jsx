@@ -7,7 +7,8 @@ import { useLoading } from "../Main/LoadingContext";
 import {
   formatDateDb, 
   decrypt_data,
-  getDayNameFromString
+  getDayNameFromString,
+  reverseDateDb
 } from "../../api/CommonFunctions";
 import DigitShow from "./../../helpers/DigitShow"
 import { COLORS } from "../../api/ImageSrc";
@@ -86,6 +87,14 @@ const LotoMotiveSixd = ({ navigation, route }) => {
     //stopLoading();
   };
 
+  const date_selection_display = (input_date) => {
+    let formatted_date = cdate;
+    if (input_date && input_date.length > 6) {
+      formatted_date = reverseDateDb(input_date);
+    }
+    return formatted_date + "(" + getDayNameFromString(formatted_date) + ")";
+  };
+
   useEffect(() => {
     getData();
     
@@ -102,7 +111,7 @@ const LotoMotiveSixd = ({ navigation, route }) => {
      
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 5D</Text>
-          <Text style={styles.subText}>{cdate}( {getDayNameFromString(cdate)})</Text>
+          <Text style={styles.subText}>{date_selection_display(getValue("cat_date"))}</Text>
         </View>
         <View style={styles.container_3}>
           <View style={styles.subContainer}>
@@ -133,7 +142,7 @@ const LotoMotiveSixd = ({ navigation, route }) => {
 
         <View style={styles.container_2}>
           <Text style={styles.text}>Lotomatic 6D</Text>
-          <Text style={styles.subText}>{cdate}( {getDayNameFromString(cdate)})</Text>
+          <Text style={styles.subText}>{date_selection_display(getValue("cat_date"))}</Text>
         </View>
         <View style={styles.container_3}>
           <View style={styles.subContainer_2}>

@@ -26,20 +26,7 @@ const LoadingProvider = ({ children }) => {
     return screenHeight;
   }
 
-  const startTimer = () => {
-    interValId = setInterval(() => {
-      clearInterval(interValId);
-      setToastMessage(null)
-    }, delay)
-  }
-
-
-  const updateLanguage=async()=>{
-    let language = await getLanguage();
-    if(language!="en"){
-      setLanguage(language);
-    }
-  }
+  
 
  
 

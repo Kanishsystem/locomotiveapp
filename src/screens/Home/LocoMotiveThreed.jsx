@@ -7,6 +7,7 @@ import {
   formatDateDb,
   decrypt_data,
   getDayNameFromString,
+  reverseDateDb
 } from "../../api/CommonFunctions";
 import { COLORS } from "../../api/ImageSrc";
 import MenuComponent from "./../Main/MenuCompoenent";
@@ -79,6 +80,14 @@ const LocoMotiveThreed = ({ navigation, route }) => {
     return data[index] !== undefined ? data[index] : "***";
   };
 
+  const date_selection_display = (input_date) => {
+    let formatted_date = cdate;
+    if (input_date && input_date.length > 6) {
+      formatted_date = reverseDateDb(input_date);
+    }
+    return formatted_date + "(" + getDayNameFromString(formatted_date) + ")";
+  };
+
   useEffect(() => {
     getData();
   }, [cdate]);
@@ -93,7 +102,7 @@ const LocoMotiveThreed = ({ navigation, route }) => {
           <View style={styles.container_2}>
             <Text style={styles.text}>Lotomatic 3D</Text>
             <Text style={styles.subText}>
-              {cdate}( {getDayNameFromString(cdate)})
+            {date_selection_display(getValue("cat_date"))}
             </Text>
           </View>
           <View style={styles.container_3}>
