@@ -32,14 +32,24 @@ const LotoMotiveSixd = ({ navigation, route }) => {
     return values.join(" ");
   }
 
- const setMessage=(dt)=>{
-  let msg = "Locomatic " + getDayNameFromString(cdate) + "("+cdate+")\n";
-    msg +="1st:"+getValueRes(dt,"prize_1")+"\n";
-    msg +="2nd:"+getValueRes(dt,"prize_2")+"\n";
-    msg +="3rd:"+getValueRes(dt,"prize_3")+"\n";
-    msg +="4th:"+getValueRes(dt,"prize_4")+"\n";
-    msg +="5th:"+getValueRes(dt,"prize_5")+"\n";
-    msg +="6th:"+getValueRes(dt,"prize_6")+"\n";
+ const setMessage=()=>{
+  let msg = "Lotomatic 5D " + date_selection_display(getValue("cat_date")) +"\n";
+    msg +="1st:"+getValue("prize_1")+"\n";
+    msg +="2nd:"+getValue("prize_2")+"\n";
+    msg +="3rd:"+getValue("prize_3")+"\n";
+    msg +="4th:"+getValue("prize_4")+"\n";
+    msg +="5th:"+getValue("prize_5")+"\n";
+    msg +="6th:"+getValue("prize_6")+"\n\n\n";
+
+    // message 
+    let msg_sec = "Lotomatic 6D" + date_selection_display(getSecValue("cat_date")) + "\n";
+    msg_sec += "1st:" + getSecValue("prize_1") + "\n";
+    msg_sec += "2nd:" + getSecValue("special_1") +" or "+  getSecValue("special_2")  + "\n";
+    msg_sec += "3rd:" + getSecValue("special_3") +" or "+  getSecValue("special_4")  + "\n";
+    msg_sec += "4th:" + getSecValue("special_5") +" or "+  getSecValue("special_6")  + "\n";
+    msg_sec += "5th:" + getSecValue("special_7") +" or "+  getSecValue("special_8")  + "\n";
+    
+    setMsg(msg + msg_sec);
    // msg +="Special:" + getOther(dt,"special",10)+"\n";
     //msg +="Consolation:" + getOther(dt,"special",10)+"\n";    
     setMsg(msg);
@@ -63,9 +73,12 @@ const LotoMotiveSixd = ({ navigation, route }) => {
     if (_data) {
       let dec_output = decrypt_data(_data);
       setData(dec_output)
-      setMessage(dec_output);
+      //setMessage(dec_output);
     }
     await getSecData();
+    setTimeout(() => {
+      setMessage();
+    }, 10 * 1000);
     stopLoading();
   };
 

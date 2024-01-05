@@ -31,7 +31,7 @@ const LocoMotiveThreed = ({ navigation, route }) => {
   };
 
   const setMessage = (dt) => {
-    let msg = "Locomatic " + getDayNameFromString(cdate) + "(" + cdate + ")\n";
+    let msg = "Locomatic 3D" + getDayNameFromString(cdate) + "(" + cdate + ")\n";
     msg += "1st:" + getValueRes(dt, "prize_1") + "\n";
     msg += "2nd:" + getValueRes(dt, "prize_2") + "\n";
     msg += "3rd:" + getValueRes(dt, "prize_3") + "\n";
@@ -77,7 +77,7 @@ const LocoMotiveThreed = ({ navigation, route }) => {
   };
 
   const getValue = (index) => {
-    return data[index] !== undefined ? data[index] : "***";
+    return data[index] !== undefined ? data[index] : "";
   };
 
   const date_selection_display = (input_date) => {

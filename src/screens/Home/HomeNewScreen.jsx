@@ -63,20 +63,32 @@ const HomeNewScreen = ({ navigation, route }) => {
   };
 
   const setMessage = (dt) => {
-    let msg = "Locomatic " + getDayNameFromString(cdate) + "(" + cdate + ")\n";
+    /*
+    let msg = "Locomatic 4D" + date_selection_display(getValueRes(dt, "cat_date")) + "\n";
     msg += "1st:" + getValueRes(dt, "prize_1") + "\n";
     msg += "2nd:" + getValueRes(dt, "prize_2") + "\n";
     msg += "3rd:" + getValueRes(dt, "prize_3") + "\n";
     msg += "Special:" + getOther(dt, "special", 10) + "\n";
-    msg += "Consolation:" + getOther(dt, "special", 10) + "\n";
-    setMsg(msg);
+    msg += "Consolation:" + getOther(dt, "special", 10) + "\n\n";*/
+
+    let msg = "Locomatic 4D" + date_selection_display(getValue("cat_date")) + "\n";
+    msg += "1st:" + getValue("prize_1") + "\n";
+    msg += "2nd:" + getValue("prize_2") + "\n";
+    msg += "3rd:" + getValue("prize_3") + "\n";
+    msg += "Special:" + getOther(data, "special", 10) + "\n";
+    msg += "Consolation:" + getOther(data, "special", 10) + "\n\n";
+    // message 
+    let msg_sec = "Lotomatic Gold" + date_selection_display(getSecValue("cat_date")) + "\n";
+    msg_sec += "1st:" + getSecValue("prize_1") + "\n";
+    setMsg(msg + msg_sec);
+
   };
 
   const getData = async () => {
     //console.log("date  " , cdate);
     startLoading();
     let url = SCREEN_ONE_1_URL + formatDateDb(cdate);
-    console.log("url ", url, "cdate ", cdate);
+    //console.log("url ", url, "cdate ", cdate);
     try {
       // setToast("started data = ");
       let _data = await apiGetDataAwait(url);
@@ -86,11 +98,19 @@ const HomeNewScreen = ({ navigation, route }) => {
         // setRaw(_data);
         let dec_output = await decrypt_data(_data);
         // setToast(" description  data");
-        console.log("dout testttttuiinngggg  = ", dec_output);
+        //console.log("dout testttttuiinngggg  = ", dec_output);
         setData(dec_output);
-        setMessage(dec_output);
+        //setMessage(dec_output);
       }
       await getSecData();
+
+      setTimeout(() => {
+        setMessage();
+       // console.log('sleep');
+      //  this.router.navigate(['/question', this.getQuestionID() + 1]);
+        // And any other code that should run only after 5s
+      }, 10 * 1000);
+
     } catch (ex) {
       console.log("ex ", ex);
     }
