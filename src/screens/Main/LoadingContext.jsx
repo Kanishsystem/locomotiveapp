@@ -13,7 +13,7 @@ const LoadingProvider = ({ children }) => {
   const [msg, setMsg] = useState("");
   const [toast, setToastMessage] = useState("");
   const [language, saveLanguage] = useState("en");
-  const [cdate, setDate] = useState(getCurrentDate()); 
+  const [cdate, setDate] = useState("-"); 
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
   

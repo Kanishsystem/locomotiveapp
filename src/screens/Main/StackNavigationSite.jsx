@@ -6,13 +6,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeNewScreen from "../Home/HomeNewScreen";
 import LocoMotiveThreed from "../Home/LocoMotiveThreed";
 import LocoMotiveSixd from "../Home/LotoMotiveSixd";
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigationSite = () => {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+   
     <NavigationContainer>
     
       <Stack.Navigator
@@ -36,7 +36,7 @@ const StackNavigationSite = () => {
         
       </Stack.Navigator>
     </NavigationContainer>
-    </GestureHandlerRootView>
+   
   );
 };
 

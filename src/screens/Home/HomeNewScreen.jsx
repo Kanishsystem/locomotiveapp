@@ -12,8 +12,7 @@ import {
 import { COLORS } from "../../api/ImageSrc";
 import MenuComponent from "./../Main/MenuCompoenent";
 //import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { Swipeable } from "react-native-gesture-handler";
-import LocoMotiveThreed from "./LocoMotiveThreed";
+
 
 const HomeNewScreen = ({ navigation, route }) => {
   const [data, setData] = useState(null);
@@ -142,7 +141,7 @@ const HomeNewScreen = ({ navigation, route }) => {
   > */}
       <View style={styles.mainContainer}>
       <TouchableOpacity onPress={rightSwipeHandler}>
-        <Swipeable renderRightActions={renderRightActions}>
+    
           <View style={styles.container_2}>
             <Text style={styles.text}>Lotomatic 4D</Text>
             <Text style={styles.subText}>
@@ -233,7 +232,7 @@ const HomeNewScreen = ({ navigation, route }) => {
               </View>
             </View>
           </View>
-        </Swipeable>
+       
         </TouchableOpacity>
       </View>
       {/* </PanGestureHandler> */}
