@@ -146,9 +146,9 @@ const LotoMotiveSixd = ({ navigation, route }) => {
               <Text style={styles.heading}>6th</Text>
             </View>
             <View style={styles.MainValue}>
-              <DigitShow digits={5} value={getValue("prize_4")} type="end" />
-              <DigitShow digits={5} value={getValue("prize_5")} type="end" />
-              <DigitShow digits={5} value={getValue("prize_6")} type="end" />
+              <DigitShow digits={5} value={getValue("prize_4")} type="start" />
+              <DigitShow digits={5} value={getValue("prize_5")} type="start" />
+              <DigitShow digits={5} value={getValue("prize_6")} type="start" />
             </View>
           </View>
         </View>
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   },
   container_2: {
     height: 50,
-    backgroundColor: "#f7e2a8",
+    backgroundColor: "#62bd7c",
     display: "flex",
     flexDirection: "column",
     position: "relative",

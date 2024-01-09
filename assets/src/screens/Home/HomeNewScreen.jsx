@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
   },
   container_2: {
     height: 50,
-    backgroundColor: "#f7e2a8",
+    backgroundColor: "#62bd7c",
     display: "flex",
     flexDirection: "column",
     position: "relative",

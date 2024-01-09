@@ -255,7 +255,7 @@ const HomeNewScreen = ({ navigation, route }) => {
             </View>
             <View style={styles.subContainer_1}>
               <View>
-                <Text style={styles.cat_text_2}>{getSecValue("prize_1")}</Text>
+                <Text style={styles.cat_text_1}>{getSecValue("prize_1")}</Text>
               </View>
             </View>
           </View>
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   },
   container_2: {
     height: 50,
-    backgroundColor: "#f7e2a8",
+    backgroundColor: "#62bd7c",
     display: "flex",
     flexDirection: "column",
     position: "relative",
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 6,
+    marginTop: 10,
     marginBottom: 4,
   },
   subViewData: {
